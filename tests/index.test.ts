@@ -6,19 +6,19 @@ import { AxiosInstance } from "./helper";
 
 const { get } = AxiosInstance;
 describe("GET /dogs", () => {
-  let dogs: Dog[];
-  beforeEach(async () => {
-    await clearDb();
-    dogs = (await seedDogs()).dogsArray;
-  });
+	let dogs: Dog[];
+	beforeEach(async () => {
+		await clearDb();
+		dogs = (await seedDogs()).dogsArray;
+	});
 
-  it("should return all the dogs in the database", async () => {
-    const { data } = await get("/dogs");
-    expect(data).toEqual(dogs);
-  });
+	it("should return all the dogs in the database", async () => {
+		const { data } = await get("/dogs");
+		expect(data).toEqual(dogs);
+	});
 
-  it("should have a status code of 200", async () => {
-    const { status } = await get("/dogs");
-    expect(status).toEqual(200);
-  });
+	it("should have a status code of 200", async () => {
+		const { status } = await get("/dogs");
+		expect(status).toEqual(200);
+	});
 });

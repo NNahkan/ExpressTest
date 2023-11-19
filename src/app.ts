@@ -11,7 +11,28 @@ app.use(express.json());
 // INDEX ENDPOINT
 app.get('/dogs', async (req, res) => {
 	const dogs = await prisma.dog.findMany()
-	res.send(dogs)
+	res.status(200).send(dogs)
+})
+
+// SHOW ENDPOINT
+app.get('/dogs/:id', async (req, res) => {
+	const id = +req.params.id
+	if (isNaN(id) || typeof id !== 'number') {
+		return res.status(400).send("Please provide valid puppy id")
+	}
+
+	const dog = await prisma.dog.findUnique({
+		where: {
+			id,
+		}
+	})
+
+	if (!dog) {
+		return res.status(204).send("Oh no! Puppy is gone")
+	}
+
+	res.status(200).send(dog)
+
 })
 
 /* 
